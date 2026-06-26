@@ -1,4 +1,19 @@
 @echo off
 echo Uruchamianie aplikacji Steam Support Dashboard...
+
+echo Sprawdzanie srodowiska wirtualnego...
+if not exist "venv\Scripts\activate.bat" (
+    echo Tworzenie srodowiska wirtualnego (moze to chwile potrwac)...
+    python -m venv venv
+)
+
+echo Aktywacja srodowiska wirtualnego...
+call venv\Scripts\activate.bat
+
+echo Instalowanie brakujacych zaleznosci...
+pip install -r requirements.txt
+
+echo Uruchamianie Streamlit...
 streamlit run app.py
+
 pause
