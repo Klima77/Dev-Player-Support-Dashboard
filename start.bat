@@ -18,6 +18,18 @@ if errorlevel 1 (
 
 echo [OK] Znaleziono Python.
 
+REM Sprawdz czy venv istnieje i dziala (zapobiega to problemom po skopiowaniu venv z innego PC)
+if exist "venv" (
+    echo [INFO] Sprawdzanie poprawnosci srodowiska wirtualnego...
+    venv\Scripts\python.exe -c "import sys" >nul 2>&1
+    if errorlevel 1 (
+        echo [WARN] Wykryto przeniesione lub uszkodzone srodowisko wirtualne. Usuwanie i tworzenie na nowo...
+        rd /s /q venv
+    ) else (
+        echo [OK] Srodowisko wirtualne jest poprawne.
+    )
+)
+
 REM Stworz venv jesli nie istnieje
 if not exist "venv\Scripts\activate.bat" (
     echo [INFO] Tworzenie srodowiska wirtualnego. Pierwsze uruchomienie, chwile poczekaj...
